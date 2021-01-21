@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+body{
+    font-family: "courier New";
+    background-color: #1e1e1e;
+}
+#main_box{
+    position: fixed;
+    height:90%;
+    width:90%;
+}
+#main_ta{
+    font-family: "courier New";
+    font-size: 1.5em;
+    height:50%;
+    width:100%;
+    background-color: #1e1e1e;
+    color: white;
+}
+#ans{
+    color:white;
+    font-size: 2em;
+}
+</style>
+
+</head>
+<body>
+    <div id="main_box">
+        <textarea id="main_ta" onkeyup="ku()"></textarea>
+        <br />
+        <div id="ans"></div>
+    </div>
+</body>
+<script>
+    function ku() {
+        var x = document.getElementById("main_ta").value;
+        var a = x.length;
+        document.getElementById("ans").innerHTML = '字数：' + String(a);
+    }
+    utools.onPluginEnter(({code, type, payload, optional}) => {
+        if(type == 'over') {
+            document.getElementById("main_ta").value = payload;
+            document.getElementById("ans").innerHTML = '字数：' + String(payload.length);
+        }
+        else {
+            document.getElementById("main_ta").value = '';
+            document.getElementById("ans").innerHTML = '字数：0';
+        }
+        document.getElementById("main_ta").focus();
+    })
+</script>
+</html>
