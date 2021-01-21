@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+body{
+    font-family: "courier New";
+    background-color: #1e1e1e;
+}
+#main_box{
+    position: fixed;
+    height:90%;
+    width:90%;
+}
+.box{
+    font-family: "courier New";
+    color:white;
+    background-color: #1e1e1e;
+    height:70%;
+    width:48%;
+    display:inline;
+}
+:visited, :link{
+	text-decoration: none;
+	color: black;
+}
+::selection {
+	background-color:rgba(228, 150, 228, 1);
+}
+.round_button {
+	height:1.2rem;
+	background-color:rgba(152, 241, 141, 1);
+    user-select:none;
+	color:black;
+	display:inline;
+	padding:0.1rem 0.5rem;
+	line-height: 2rem;
+	/*width:auto;*/
+	border-radius: 0.6rem;
+	transition:0.4s;
+    word-break:keep-all;
+
+    font-family: "Microsoft Yahei";
+    
+}
+.round_button:hover{
+	background-color:rgb(59, 202, 90, 1);
+}
+</style>
+</head>
+
+<body>
+    <div id="main_box">
+        <textarea id="box_1" class="box"></textarea>
+        <textarea id="box_2" class="box"></textarea>
+        <br />
+        <a class="round_button" href="javascript:void(0);" onclick="change1()">去行号空格</a>
+        <div id="state_shower"></div>
+    </div>
+</body>
+
+<script>
+    function erasePreffix(s) {
+        var pos = 0;
+        while(s[pos] < '0' || s[pos] > '9') {
+            ++pos;
+        }
+        while(s[pos] >= '0' && s[pos] <= '9') {
+            ++pos;
+        }
+        return s.slice(pos + 1, s.length);
+    }
+    function change1() {
+        var s = document.getElementById("box_1").value;
+        var ans = "";
+        var id = s.indexOf('\n');
+        while(id != -1) {
+            ans += erasePreffix(s.slice(0, id + 1));
+            s = s.slice(id + 1, s.length);
+            id = s.indexOf('\n');
+        }
+        ans += erasePreffix(s);
+        document.getElementById("box_2").value = ans;
+        if(utools.copyText(ans)) {
+            document.getElementById("state_shower").style.backgroundColor = "green";
+            document.getElementById("state_shower").innerHTML = "复制成功！";
+        }
+        else {
+            document.getElementById("state_shower").style.backgroundColor = "red";
+            document.getElementById("state_shower").innerHTML = "复制失败，请手动复制！";
+        }
+    }
+    utools.onPluginEnter(({code, type, payload, optional}) => {
+        if(type == 'over') {
+            document.getElementById("box_1").value = payload;
+            change1();
+        }
+        else {
+            document.getElementById("box_1").value = '';
+            document.getElementById("box_2").value = '';
+            document.getElementById("state_shower").innerHTML = "";
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,22 @@
+{
+    "pluginName": "代码格式化",
+    "description": "代码格式化",
+    "author": "lbdbcx",
+    "main": "index.html",
+    "logo": "logo.png",
+    "version": "0.1.0",
+    "platform": ["win32", "linux"],
+    "features": [
+        {
+            "code": "1",
+            "explain": "代码格式化",
+            "cmds":[
+                "code format",
+                {
+                    "type": "over",
+                    "label": "代码格式化"
+                }
+            ]
+        }
+    ]
+}
